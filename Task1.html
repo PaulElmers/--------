@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+</head>
+<body>
+
+<h1>Вгадайте число!</h1>
+
+<input type="number" id="guessInput">
+<button onclick="checkGuess()">Перевірити</button>
+
+<div id="feedback"></div>
+
+<script>
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+    console.log("Секретне число:", randomNumber);
+
+    let previousGuess = null;
+
+    function checkGuess() {
+        const userGuess = parseInt(document.getElementById('guessInput').value);
+
+        if (isNaN(userGuess)) {
+            document.getElementById('feedback').innerText = "Будь ласка, введіть число!";
+            return;
+        }
+
+        if (previousGuess === null) {
+            previousGuess = userGuess;
+            document.getElementById('feedback').innerText = "Спробуйте ще раз!";
+            return;
+        }
+
+        const currentDifference = Math.abs(randomNumber - userGuess);
+        const previousDifference = Math.abs(randomNumber - previousGuess);
+
+        if (currentDifference < previousDifference) {
+            document.getElementById('feedback').innerText = "Тепліше";
+        } else if (currentDifference > previousDifference) {
+            document.getElementById('feedback').innerText = "Холодніше";
+        } else {
+            document.getElementById('feedback').innerText = "Так само тепло, як і раніше";
+        }
+
+        previousGuess = userGuess;
+
+        if (userGuess === randomNumber) {
+            document.getElementById('feedback').innerText = "Вітаємо! Ви вгадали число!";
+        }
+    }
+</script>
+
+</body>
+</html>
